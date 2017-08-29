@@ -37,10 +37,31 @@ function gymLocation(value) {
 function ViewModel() {
     
     var self = this;
+    self.marker = ko.observableArray([]);
+    self.locations = ko.observableArray(locations);
+    self.sortedLocations = ko.observableArray([]);
     self.query = ko.observable("");
-    self.locationList = ko.observableArray([]);
-    self.sortedLocations =ko.observableArray(locations);
-    // filter with knockout.js
+    self.map = map;
+    self.sortedLocations = ko.computed(function () {
+
+        // Declearing the filter functions to filter text through words
+        return ko.utils.arrayFilter(self.locations(), function (item) {
+
+            // Check if search text is exicts or not
+            if (item.title.toLowerCase().indexOf(self.filter().toLowerCase()) !== -1) {
+
+                // if it exists set the map view to the marker if not remove all markers
+                if (item.marker)
+                    item.marker.setVisible(true);
+            } else {
+                if (item.marker)
+                    item.marker.setVisible(false);
+            }
+            return item.title.toLowerCase().indexOf(self.filter().toLowerCase()) !== -1;
+        });
+    }, self);
+
+    
     
    
     
