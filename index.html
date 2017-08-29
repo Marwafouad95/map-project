@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Alexandria map</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="css/style.css">
+        
+    </head>
+    <body>
+        
+            <h1>Alexandria Map</h1>
+            <div id="search">
+                <input  id="search-area" type="search" placeholder="Search Location"  data-bind="textInput: query, valueUpdate: 'afterkeydown'" />
+            </div>
+            <div id="content">
+                <div id="list-area">
+                 <ul id="place-list" data-bind="foreach: sortedLocations">
+                    <li id="list-items" data-bind="text: name" ></li>
+                </ul>
+                </div>
+                <div id="map"></div>
+            </div>
+         
+        
+    
+    
+    
+    
+    <script src='js/knockout-3.4.2.js'></script>
+    <script src='js/jquery-3.1.1.min.js'></script>
+    <script src="js/app.js"></script>
+    <script async defer
+     src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDOugzOX_gv8-wuOYehPkTIvxUXJxL-by0&callback=initMap">
+    </script>
+    </body>
+
+
+
+
+
+
+
+</html>
