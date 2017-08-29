@@ -42,23 +42,7 @@ function ViewModel() {
     self.sortedLocations =ko.observableArray(locations);
     // filter with knockout.js
     
-   self.sortedLocations = ko.computed( function() {
-		var filter = self.query().toLowerCase();
-		if (!filter) {
-			self.locationList().forEach(function(locationItem){
-				locationItem.visible(true);
-			});
-			return self.locationList();
-		} else {
-			return ko.utils.arrayFilter(self.locationList(), function(locationItem) {
-				var string = locationItem.name.toLowerCase();
-				var result = (string.search(filter) >= 0);
-				locationItem.visible(result);
-				return result;
-			});
-		}
-	}, self);
-
+   
     
     
     
