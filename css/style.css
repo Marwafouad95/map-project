@@ -1,0 +1,47 @@
+html,
+            body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+
+h1 {
+    margin: 15 px;
+    color: black ;
+    text-align: center;
+}
+
+#search {
+    width: 50%;
+    display: flex;
+}
+#search-area {
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+#content {
+    width: 90%;
+    height: 90%;
+    display: flex;
+    margin: auto;
+}
+
+#list-area {
+    order: 1;
+    flex-grow: 1;
+    background-color: seagreen;
+    color: white;
+    margin: 10px;
+    
+}
+            #map {
+    order: 2;
+    flex-grow: 4;
+    background-color: #fff;
+    text-align: center;
+    height: 500px;
+    margin: 10px;
+      }
