@@ -48,7 +48,7 @@ function ViewModel() {
         return ko.utils.arrayFilter(self.locations(), function (item) {
 
             // Check if search text is exicts or not
-            if (item.title.toLowerCase().indexOf(self.filter().toLowerCase()) !== -1) {
+            if (item.name.toLowerCase().indexOf(self.query().toLowerCase()) !== -1) {
 
                 // if it exists set the map view to the marker if not remove all markers
                 if (item.marker)
@@ -57,9 +57,10 @@ function ViewModel() {
                 if (item.marker)
                     item.marker.setVisible(false);
             }
-            return item.title.toLowerCase().indexOf(self.filter().toLowerCase()) !== -1;
+            return item.name.toLowerCase().indexOf(self.query().toLowerCase()) !== -1;
         });
     }, self);
+    
 
     
     
