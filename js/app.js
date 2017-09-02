@@ -39,7 +39,7 @@ var locations = [
     
     
 ];
-//inseart map
+
 
 
 
@@ -50,7 +50,7 @@ function gymLocation(value) {
 };
 
 
-//
+//view model to data bined
 
 function ViewModel() {
     
@@ -72,7 +72,7 @@ function ViewModel() {
     //
     self.sortedLocations = ko.computed(function () {
 
-        // Declearing the filter functions to filter text through words
+        // Declearing the filter functions 
         return ko.utils.arrayFilter(self.locations(), function (item) {
 
             // Check if search text is exicts or not
@@ -124,8 +124,7 @@ function ViewModel() {
     
     
     
-    
- //end filter     
+     
 }
 
 
@@ -134,7 +133,7 @@ function ViewModel() {
 
 
 
-
+// insert map
 
 function initMap() {
        var mapOption = {
