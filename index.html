@@ -17,7 +17,7 @@
             <div id="content">
                 <div id="list-area">
                  <ul id="place-list" data-bind="foreach: sortedLocations">
-                    <li id="list-items" data-bind="text: name" ></li>
+                    <li id="list-items" data-bind="text: name, click: $root.clickHandler" ></li>
                 </ul>
                 </div>
                 <div id="map"></div>
