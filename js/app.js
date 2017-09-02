@@ -27,6 +27,9 @@ var locations = [
     
     
 ];
+//inseart map
+
+
 
 function gymLocation(value) {
   this.name = ko.observable(value.name);
@@ -34,14 +37,27 @@ function gymLocation(value) {
   this.latlng = ko.observable(value.lat);
 };
 
+
+//
+
 function ViewModel() {
     
     var self = this;
+   
+    
+    
+    
+    
     self.marker = ko.observableArray([]);
     self.locations = ko.observableArray(locations);
     self.sortedLocations = ko.observableArray([]);
     self.query = ko.observable("");
     self.map = map;
+    
+    
+    //
+    
+    //
     self.sortedLocations = ko.computed(function () {
 
         // Declearing the filter functions to filter text through words
@@ -51,20 +67,48 @@ function ViewModel() {
             if (item.name.toLowerCase().indexOf(self.query().toLowerCase()) !== -1) {
 
                 // if it exists set the map view to the marker if not remove all markers
-                if (item.marker)
-                    item.marker.setVisible(true);
+                if (item.m)
+                    // item.marker.setVisible(true);
+                    item.m.setVisible(true);
             } else {
-                if (item.marker)
-                    item.marker.setVisible(false);
+                if (item.m)
+                    // item.marker.setVisible(false);
+                    item.m.setVisible(false);
             }
             return item.name.toLowerCase().indexOf(self.query().toLowerCase()) !== -1;
         });
     }, self);
     
+    self.clickHandler = function (location) {
+    
+
+      var latlng = new google.maps.LatLng(location.lat, location.lng);
+        var marker = new google.maps.Marker({
+      map: map,
+      position: latlng,
+      title: location.name
+   });
+  
+
+            
+      // Creating the content to be inserted in the infowindow
+      var infoContent ='<div id="info_container">' +
+            '<div class="info_title">' + location.name + '</div>' + '<br />' +'<div class="info_content">' + location.info + '</div></div>';
+      
+      
+      infoWindow.setContent(infoContent);
+
+      // opening the Info Window in the current map and at the current marker location.
+      infoWindow.open(map, marker);
+
+  
+
+    };
 
     
     
-   
+    
+  
     
     
     
@@ -95,10 +139,10 @@ function initMap() {
    });
     
     
-  displayMarkers();
+  displayMarkers(locations);
 };
 
-google.maps.event.addDomListener(window, 'load', initMap);
+// google.maps.event.addDomListener(window, 'load', initMap);
 
 
 
@@ -106,20 +150,21 @@ google.maps.event.addDomListener(window, 'load', initMap);
 
 // This function will iterate over markersData array
 // creating markers with createMarker function
-function displayMarkers(){
-
+function displayMarkers(locations){
+   
+     
    // this variable sets the map bounds and zoom level according to markers position
    var bounds = new google.maps.LatLngBounds();
 
    // For loop that runs through the info on markersData making it possible to createMarker function to create the markers
    for (var i = 0; i < locations.length; i++){
-
+       
       var latlng = new google.maps.LatLng(locations[i].lat, locations[i].lng);
       var name = locations[i].name;
       var info = locations[i].info;
-
-      createMarker(latlng, name, info);
-
+    
+      createMarker(latlng, name, info, locations[i]);
+      
       // Marker’s Lat. and Lng. values are added to bounds variable
       bounds.extend(latlng); 
    }
@@ -130,15 +175,21 @@ function displayMarkers(){
 }
 
 // This function creates each marker and it sets their Info Window content
-function createMarker(latlng, name, info){
+function createMarker(latlng, name, info, loccc){
+    
    var marker = new google.maps.Marker({
       map: map,
       position: latlng,
       title: name
    });
+
+   loccc.m = marker;
+  
     
-    //infowindow
+    
+          //infowindow
     google.maps.event.addListener(marker, 'click', function() {
+        console.log('hello');
       
       // Creating the content to be inserted in the infowindow
       var infoContent ='<div id="info_container">' +
@@ -150,7 +201,6 @@ function createMarker(latlng, name, info){
       // opening the Info Window in the current map and at the current marker location.
       infoWindow.open(map, marker);
    });
+    
+    
 }
-
-
-  
