@@ -19,9 +19,21 @@ var locations = [
         info :'s a palace and extensive gardens in the Montaza district of Alexandria',
     },
     {
-        name : 'Alexandria Library',
+        name : 'Library of Alexandria',
         lat : 31.208870 ,
         lng : 29.909201 ,    
+        info : 'it was one of the largest and most significant libraries of the ancient world',
+    },
+    {
+        name : 'Stanley_(neighborhood)',
+        lat : 31.2350626 ,
+        lng : 29.9507728 ,    
+        info : 'it was one of the largest and most significant libraries of the ancient world',
+    },
+    {
+        name : 'San Stifano',
+        lat : 31.2457614 ,
+        lng : 29.9761086 ,    
         info : 'it was one of the largest and most significant libraries of the ancient world',
     },
     
@@ -175,25 +187,42 @@ function displayMarkers(locations){
 }
 
 // This function creates each marker and it sets their Info Window content
-function createMarker(latlng, name, info, loccc){
-    
+function createMarker(latlng, name, info){
    var marker = new google.maps.Marker({
       map: map,
       position: latlng,
       title: name
    });
-
-   loccc.m = marker;
-  
     
     
-          //infowindow
+     var locationName = marker.name;
+        var wikiURL = 'https://en.wikipedia.org/w/api.php?format=json&action=opensearch&search=' + locationName;
+        var str = "";
+        $.ajax({
+            url: wikiURL,
+            dataType: "jsonp",
+            success: function (response) {
+                var articleList = response[1];
+                var locName = response[0];
+                
+                if (articleList.length > 0) {
+                    for (var article in articleList) {
+                        if (articleList.hasOwnProperty(article)) {
+                            var element = articleList[article];
+                            str = "<li><a href='https://en.wikipedia.org/wiki/" + element + "'>" + element + "</a></li>"
+                        }
+                    }
+                } else {
+                    str = "<li><a href='https://en.wikipedia.org/w/index.php?title=Special:Search&fulltext=1&search=" + locName.replace(' ', '+') + "'>" + locName + "</a></li>"
+                }
+                
+                console.log(str)
+    //infowindow
     google.maps.event.addListener(marker, 'click', function() {
-        console.log('hello');
       
       // Creating the content to be inserted in the infowindow
       var infoContent ='<div id="info_container">' +
-            '<div class="info_title">' + name + '</div>' + '<br />' +'<div class="info_content">' + info + '</div></div>';
+            '<div class="info_title">' + name + '</div>' + '<br />' +'<div class="info_content">' + info + '</div></div>' + str;
       
       
       infoWindow.setContent(infoContent);
@@ -201,6 +230,5 @@ function createMarker(latlng, name, info, loccc){
       // opening the Info Window in the current map and at the current marker location.
       infoWindow.open(map, marker);
    });
-    
-    
+}})
 }
