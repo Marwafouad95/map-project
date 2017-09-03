@@ -39,7 +39,7 @@ var locations = [
     
     
 ];
-
+//inseart map
 
 
 
@@ -50,7 +50,7 @@ function gymLocation(value) {
 };
 
 
-//view model to data bined
+//
 
 function ViewModel() {
     
@@ -72,7 +72,7 @@ function ViewModel() {
     //
     self.sortedLocations = ko.computed(function () {
 
-        // Declearing the filter functions 
+        // Declearing the filter functions to filter text through words
         return ko.utils.arrayFilter(self.locations(), function (item) {
 
             // Check if search text is exicts or not
@@ -124,7 +124,8 @@ function ViewModel() {
     
     
     
-     
+    
+ //end filter     
 }
 
 
@@ -133,7 +134,7 @@ function ViewModel() {
 
 
 
-// insert map
+
 
 function initMap() {
        var mapOption = {
@@ -189,12 +190,22 @@ function displayMarkers(locations){
 function createMarker(latlng, name, info){
    var marker = new google.maps.Marker({
       map: map,
+      draggable: true,
+      animation: google.maps.Animation.DROP,
       position: latlng,
       title: name
    });
+     marker.addListener('click', toggleBounce);
+    function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      };
     
     
-     var locationName = marker.name;
+     var locationName =name;
         var wikiURL = 'https://en.wikipedia.org/w/api.php?format=json&action=opensearch&search=' + locationName;
         var str = "";
         $.ajax({
@@ -215,7 +226,7 @@ function createMarker(latlng, name, info){
                     str = "<li><a href='https://en.wikipedia.org/w/index.php?title=Special:Search&fulltext=1&search=" + locName.replace(' ', '+') + "'>" + locName + "</a></li>"
                 }
                 
-                console.log(str)
+                //console.log(str)
     //infowindow
     google.maps.event.addListener(marker, 'click', function() {
       
