@@ -234,9 +234,12 @@ function showinfoWindow(marker) {
             }
 
         }
-    });
+    }).fail(function (XHR, status, error) {
+                    alert("error in loading wiki api");
+                    });
 }
 
 // show error message when the map is not load
 function errorMesage() {
     alert("error happend when loading google map ");
+}
