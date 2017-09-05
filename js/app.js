@@ -34,7 +34,7 @@ var locations = [{
         lat: 31.2457614,
         lng: 29.9761086,
         info: 'it is a Shopping Mall and cinema',
-    },
+    }
 
 
 ];
@@ -42,11 +42,7 @@ var locations = [{
 
 // tells the view model what to do when a change happens 
 
-function gymLocation(value) {
-    this.name = ko.observable(value.name);
-    this.description = ko.observable(value.info);
-    this.latlng = ko.observable(value.lat);
-}
+
 
 
 //view model 
@@ -160,6 +156,7 @@ function displayMarkers(locations) {
             animation: google.maps.Animation.DROP,
 
         });
+        locations[i].m = marker;
         showinfoWindow(marker);
 
         // Marker’s Lat. and Lng. values are added to bounds variable
@@ -234,10 +231,10 @@ function showinfoWindow(marker) {
             }
 
         }
-    }).fail(function (XHR, status, error) {
-                    alert("error in loading wiki api");
-                    });
-}
+    });
+}.fail(function(XHR, status, error) {
+    console.log(error);
+});
 
 // show error message when the map is not load
 function errorMesage() {
