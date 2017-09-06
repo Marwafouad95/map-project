@@ -78,30 +78,7 @@ function ViewModel() {
         });
     }, self);
  
- /*   self.clickHandler = function(location) {
  
-        //create new markers at each location in the Locations array
- 
-        var latlng = new google.maps.LatLng(location.lat, location.lng);
-        var info = location.info;
- 
-        var marker = new google.maps.Marker({
-            map: map,
-            position: latlng,
-            title: location.name,
-            info: location.info,
-            animation: google.maps.Animation.DROP,
-            flag: 'done'
-        });
- 
- 
- 
-        // console.log(latlng + '  ' +  location.name + '</br>' +  location.info);
-        showinfoWindow(marker);
- 
- 
- 
-    }; */
     
     self.clickHandler = function(location) {
 
@@ -110,8 +87,8 @@ function ViewModel() {
         var latlng = new google.maps.LatLng(location.lat, location.lng);
         var info = location.info;
 
-        locations.forEach(function(llocc) {
-            llocc.m.setVisible(false);
+        locations.forEach(function(locc) {
+            locc.m.setVisible(false);
         });
         location.m.setVisible(true);
         infoWindow.setContent(location.m.info);
@@ -125,7 +102,8 @@ function ViewModel() {
                     marker.setAnimation(null);
                 }, 1400);
             };
-        animate(marker);
+        animate(location.m);
+        
 
 
     };
@@ -184,7 +162,7 @@ function displayMarkers(locations) {
  
         });
         locations[i].m = marker;
-        showinfoWindow(marker);
+        
  
         // Marker’s Lat. and Lng. values are added to bounds variable
         bounds.extend(latlng);
@@ -205,6 +183,7 @@ function showinfoWindow(marker) {
         url: wikiURL,
         dataType: "jsonp",
         success: function(response) {
+            var infoContent = "";
             var articleList = response[1];
             var locName = response[0];
             // console.log(articleList + '<br>' + locName);
@@ -233,7 +212,7 @@ function showinfoWindow(marker) {
  
             marker.addListener('click', function() {
                 // Creating the content to be inserted in the infowindow
-                var infoContent = '<div id="info_container">' +
+                 infoContent = '<div id="info_container">' +
                     '<div class="info_title">' + marker.title + '</div>' + '<br />' + '<div class="info_content">' + marker.info + '</div></div>' + str;
  
                 animate(marker);
@@ -247,7 +226,7 @@ function showinfoWindow(marker) {
             if (marker.flag == 'done') {
  
                 //create the content of info window
-                var infoContent = '<div id="info_container">' +
+                 infoContent = '<div id="info_container">' +
                     '<div class="info_title">' + marker.title + '</div>' + '<br />' + '<div class="info_content">' + marker.info + '</div></div>' + str;
  
                 animate(marker);
@@ -256,6 +235,7 @@ function showinfoWindow(marker) {
                 // opening the Info Window in the current map and at the current marker location.
                 infoWindow.open(map, marker);
             }
+            marker.info = infoContent;
  
         },error:function(XHR, status, errore) {
             alert("error");
