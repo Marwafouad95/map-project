@@ -232,7 +232,7 @@ function showinfoWindow(marker) {
 
         }
     });
-}.fail(function(XHR, status, error) {
+},fail:(function(XHR, status, error) {
     console.log(error);
 });
 
