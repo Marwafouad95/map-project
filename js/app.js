@@ -230,11 +230,11 @@ function showinfoWindow(marker) {
                 infoWindow.open(map, marker);
             }
 
-        }
-    });
-},fail:(function(XHR, status, error) {
+        },fail:function(XHR, status, error) {
     console.log(error);
-});
+}
+    });
+}
 
 // show error message when the map is not load
 function errorMesage() {
